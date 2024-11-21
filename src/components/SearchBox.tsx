@@ -107,6 +107,17 @@ const SearchBox = ({
     setItems(items.filter((i) => i !== item));
   }
 
+  function handleLuckySearch() {
+    const randomItems = ingredientsData
+      .toSorted(() => Math.random() - 0.5)
+      .slice(0, 3);
+
+    onSearch(
+      people,
+      randomItems.map((item) => item.label)
+    );
+  }
+
   return (
     <div className="flex flex-col justify-center items-center gap-4 max-w-xl">
       <div className="flex flex-col gap-2">
@@ -201,7 +212,7 @@ const SearchBox = ({
         layout
         className={cn(
           buttonVariants({ variant: "default", size: "lg" }),
-          "w-full font-semibold text-lg w-auto",
+          "font-semibold text-lg w-auto",
           "bg-gradient-to-b from-[#cc0000] via-[#d33a3a] to-[#cc0000]",
           "hover:scale-110 active:scale-95"
         )}
@@ -221,6 +232,24 @@ const SearchBox = ({
         }}
       >
         Give me recipes!
+      </motion.button>
+
+      <motion.button
+        onClick={handleLuckySearch}
+        layout
+        className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}
+        animate={{
+          scale: 1,
+        }}
+        transition={{
+          scale: 0,
+        }}
+        whileHover={{
+          scale: 1.1,
+          borderRadius: "10px",
+        }}
+      >
+        I&apos;m Feeling Lucky
       </motion.button>
     </div>
   );

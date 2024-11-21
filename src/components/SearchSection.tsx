@@ -18,8 +18,10 @@ const SearchSection = () => {
   const [open, setOpen] = useState(false);
   const [recipes, setRecipes] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState<string[]>([]);
   const onSearch = async (people: string, items: string[]) => {
     setLoading(true);
+    setItems(items);
 
     const data = await generateRecipe(people, items);
 
@@ -54,6 +56,7 @@ const SearchSection = () => {
               >
                 <LoaderPinwheel className="text-brand size-36" />
               </motion.div>
+              <div>Preparing {items.join(", ")}...</div>
               <div>This may take a while...</div>
             </AlertDialogContent>
           </AlertDialog>
@@ -74,11 +77,11 @@ const SearchSection = () => {
               setRecipes(null);
             }}
           >
-            <DialogHeader>
-              <DialogTitle>Recipes</DialogTitle>
-            </DialogHeader>
-            <DialogContent className="max-h-[80vh] overflow-auto">
-              <div className="flex flex-col justify-center items-center gap-4">
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Recipes with {items.join(", ")}</DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-4 max-h-[80vh] overflow-auto">
                 <div className="prose">{parse(recipes ?? "")}</div>
                 <Logo className="size-[80px]" />
               </div>
