@@ -16,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "La Papa Sabia - Recetas inteligentes",
-  description: "Generador de recetas con inteligencia artificial",
+  title: "La Papa Sabia - Intelligent Recipe Generator",
+  description: "Recipe generator with artificial intelligence",
 };
 
 export default function RootLayout({
