@@ -137,7 +137,7 @@ const SearchBox = ({
           <PopoverContent className="p-0 w-[200px]">
             <Command>
               <CommandInput
-                placeholder="Search ingredient..."
+                placeholder="Start typing to add ingredients…"
                 className="h-9"
               />
               <CommandList>
@@ -173,7 +173,7 @@ const SearchBox = ({
               key={item}
               className={cn(
                 buttonVariants({ variant: "secondary" }),
-                "flex items-center justify-between gap-2 select-none"
+                "flex items-center justify-between gap-2 select-none shadow-md"
               )}
               initial={{ scale: 0.1 }}
               animate={{ scale: [1, 1.2, 0.9, 1] }}
@@ -201,7 +201,9 @@ const SearchBox = ({
         layout
         className={cn(
           buttonVariants({ variant: "default", size: "lg" }),
-          "hover:scale-110 active:scale-95 w-full"
+          "w-full font-semibold text-lg",
+          "bg-gradient-to-b from-[#cc0000] via-[#d33a3a] to-[#cc0000]",
+          "hover:scale-110 active:scale-95"
         )}
         animate={{
           rotate: 360,
