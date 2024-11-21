@@ -14,7 +14,7 @@ export async function generateRecipe(people: string, ingredients: string[]) {
 
   try {
     const response = await generateText({
-      model: google("gemini-1.5-pro"),
+      model: google("gemini-1.5-flash-latest"),
       system: `You are a chef that generates recipes based mainly on the ingredients provided. Be creative and think outside the box. 
             The recipes should be different from each other. Use a little humor in your instructions (Don't exaggerate either).
             The text should be in HTML format. Do not include backticks (\`\`\`) or "html" tags outside of the <div>. 
