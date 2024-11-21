@@ -238,8 +238,15 @@ const SearchBox = ({
         onClick={handleLuckySearch}
         layout
         className={cn(buttonVariants({ variant: "secondary", size: "lg" }))}
+        initial={{
+          scale: 0,
+          x: 500,
+          opacity: 0,
+        }}
         animate={{
           scale: 1,
+          x: 0,
+          opacity: 1,
         }}
         transition={{
           scale: 0,
