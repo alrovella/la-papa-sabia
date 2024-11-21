@@ -1,10 +1,9 @@
 "use client";
-import { AutoComplete } from "@/components/ui/autocomplete";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
-import { X } from "lucide-react";
+import { Button, buttonVariants } from "./ui/button";
+import { ChevronsUpDown, X } from "lucide-react";
 import {
   Select,
   SelectTrigger,
@@ -12,6 +11,15 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "./ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 const ingredientsData = [
   { value: "tomato", label: "Tomato" },
@@ -77,7 +85,7 @@ const ingredientsData = [
   { value: "pumpkin", label: "Pumpkin" },
   { value: "chickpeas", label: "Chickpeas" },
   { value: "avocado", label: "Avocado" },
-];
+].sort((a, b) => a.label.localeCompare(b.label));
 
 const peopleData = [1, 2, 4, 6, 8];
 
@@ -86,25 +94,17 @@ const SearchBox = ({
 }: {
   onSearch: (people: string, items: string[]) => void;
 }) => {
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
   const [people, setPeople] = useState<string>("2");
   const [items, setItems] = useState<string[]>([]);
 
-  const handleSelectedValueChange = (value: string) => {
+  const handleSelectItem = (value: string) => {
     if (value === "" || items.includes(value) || items.length > 5) return;
-    setSelectedValue(value);
     setItems([...items, value]);
-    setSearchValue("");
   };
 
   function handleDeleteItem(item: string) {
     setItems(items.filter((i) => i !== item));
-    setSearchValue("");
-  }
-
-  async function handleClick() {
-    onSearch(people, items);
   }
 
   return (
@@ -127,16 +127,39 @@ const SearchBox = ({
 
       <div className="flex flex-col gap-2">
         <div className="font-bold text-xl">Choose your ingredients</div>
-        <AutoComplete
-          selectedValue={selectedValue}
-          onSelectedValueChange={handleSelectedValueChange}
-          searchValue={searchValue}
-          onSearchValueChange={setSearchValue}
-          items={ingredientsData}
-          placeholder="Search ingredients"
-          emptyMessage="No ingredient found"
-          className="w-full"
-        />
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="justify-between">
+              Select ingredients...
+              <ChevronsUpDown className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0 w-[200px]">
+            <Command>
+              <CommandInput
+                placeholder="Search ingredient..."
+                className="h-9"
+              />
+              <CommandList>
+                <CommandEmpty>No ingredient found.</CommandEmpty>
+                <CommandGroup>
+                  {ingredientsData.map((ingredient) => (
+                    <CommandItem
+                      key={ingredient.value}
+                      value={ingredient.value}
+                      onSelect={() => {
+                        handleSelectItem(ingredient.label);
+                        setOpen(false);
+                      }}
+                    >
+                      {ingredient.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
         <div className="text-muted-foreground text-sm">
           Choose 2 to 6 ingredients to cook with
         </div>
@@ -174,7 +197,7 @@ const SearchBox = ({
 
       <motion.button
         disabled={items.length < 2}
-        onClick={handleClick}
+        onClick={() => onSearch(people, items)}
         layout
         className={cn(
           buttonVariants({ variant: "default", size: "lg" }),
@@ -195,7 +218,7 @@ const SearchBox = ({
           backgroundColor: "red",
         }}
       >
-        What do I cook with these ingredients?
+        Give me recipes!
       </motion.button>
     </div>
   );

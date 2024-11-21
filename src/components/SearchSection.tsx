@@ -6,9 +6,9 @@ import parse from "html-react-parser";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogTitle,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
 } from "./ui/alert-dialog";
 import { LoaderPinwheel } from "lucide-react";
 import { toast } from "react-hot-toast";
@@ -35,22 +35,30 @@ const SearchSection = () => {
 
   return (
     <>
-      <AlertDialog open={loading && recipes === null}>
-        <AlertDialogContent className="flex flex-col justify-center items-center">
-          <AlertDialogTitle>Generating recipes</AlertDialogTitle>
-          <motion.div
-            animate={{ rotate: 360, opacity: [0.8, 1, 0.8] }}
-            transition={{
-              duration: 2,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "loop",
-            }}
-          >
-            <LoaderPinwheel className="text-brand size-36" />
-          </motion.div>
-          <div>This may take a while...</div>
-        </AlertDialogContent>
-      </AlertDialog>
+      {loading && recipes === null && (
+        <motion.div
+          initial={{ y: "-100vh" }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <AlertDialog open>
+            <AlertDialogContent className="flex flex-col justify-center items-center">
+              <AlertDialogTitle>Generating recipes</AlertDialogTitle>
+              <motion.div
+                animate={{ rotate: 360, opacity: [0.8, 1, 0.8] }}
+                transition={{
+                  duration: 2,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatType: "loop",
+                }}
+              >
+                <LoaderPinwheel className="text-brand size-36" />
+              </motion.div>
+              <div>This may take a while...</div>
+            </AlertDialogContent>
+          </AlertDialog>
+        </motion.div>
+      )}
 
       {open && (
         <motion.div
