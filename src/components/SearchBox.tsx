@@ -169,16 +169,16 @@ const SearchBox = ({
         <AnimatePresence mode="popLayout">
           {items.map((item) => (
             <motion.div
-              exit={{ scale: [1, 0.9, 1.2, 0.5, 0.0] }}
+              exit={{ scale: [1, 0.9, 1.2, 0.5, 0.0], x: 500, opacity: [1, 0] }}
               key={item}
               className={cn(
                 buttonVariants({ variant: "secondary" }),
                 "flex items-center justify-between gap-2 select-none shadow-md"
               )}
-              initial={{ scale: 0.1 }}
-              animate={{ scale: [1, 1.2, 0.9, 1] }}
+              initial={{ scale: 0.1, x: -500 }}
+              animate={{ scale: [1, 1.2, 0.9, 1], x: 0 }}
               transition={{
-                duration: 0.3,
+                duration: 0.2,
                 ease: "easeInOut",
               }}
             >
