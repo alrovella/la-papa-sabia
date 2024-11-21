@@ -201,7 +201,7 @@ const SearchBox = ({
         layout
         className={cn(
           buttonVariants({ variant: "default", size: "lg" }),
-          "w-full font-semibold text-lg",
+          "w-full font-semibold text-lg w-auto",
           "bg-gradient-to-b from-[#cc0000] via-[#d33a3a] to-[#cc0000]",
           "hover:scale-110 active:scale-95"
         )}
